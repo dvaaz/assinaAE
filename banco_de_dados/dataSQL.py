@@ -102,6 +102,20 @@ class BancoDeDados:
     except Exception as e:
       raise ("Erro ao utilizar chave pública: %s"% e)
       return False
+  
+  def utilizar_chave_privada(self, emissor, receptor):
+    try:
+      self.__conectar()
+      self.__cursor.execute("Select chave FROM privateKey WHERE emissor = ? AND receptor = ?", (emissor, receptor))
+      chave = self.__cursor.fetchone()
+      self.__desconectar()
+      if chave is not None:
+        return chave[0]
+      else:
+        raise ValueError("Chave privada não encontrada para o emissor e receptor especificados.")
+    except Exception as e:
+      raise ("Erro ao utilizar chave privada: %s"% e)
+      return False
 
   def procurar_usuario(self, email):
     if not self.__conectar():
@@ -124,7 +138,7 @@ class BancoDeDados:
       return True
     else:
       return False
-
+  # confirma senha e status do usuário
   def confirmar_senha(self, login, hash):
       try:
         self.__conectar()
@@ -143,14 +157,14 @@ class BancoDeDados:
           raise ValueError("Usuário não encontrado")
         
         #verifica se o usuário está bloqueado ou excluído
-        self.__cursor.execute("SELECT status FROM status WHERE id = ?", (id_armazendo[0],))
+        self.__cursor.execute("SELECT status FROM status WHERE id = ?", (id_armazenado[0],))
         validar_id = self.__cursor.fetchone()
 
         self.__desconectar()
         if validar_id[0] is not None:
           if validar_id[0] == 0:
             raise ValueError("Usuário bloquado, procure o administrador")
-          else if validar_id[0] == -1:
+          elif validar_id[0] == -1:
             raise ValueError("Usuário excluído")
         
         if hash_armazenado is not None:
