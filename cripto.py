@@ -9,7 +9,7 @@ from hashlib import sha256
 class Cripto:
     # inicia a conexão com o banco de dados
     def __init__(self):
-        self.sql = sql()
+        pass
     # Gera um par de chaves RSA e armazena no banco de dados
     def gerar_chaves(self, emissor, receptor): #recebe o emissor e receptor das chaves
         private_key = rsa.generate_private_key(

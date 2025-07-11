@@ -65,15 +65,15 @@ class BancoDeDados:
       return False
 
 
-  def inserir_usuario(self, nomeusuario, email, hash):
+  def inserir_usuario(self, nomeusuario, email, senha_hash):
     try:
       self.__conectar()
       self.__cursor.execute("INSERT INTO usuarios (nomeusuario, email, senha_hash) VALUES (?, ?, ?)",
-                            (nomeusuario, email, hash))
+                            (nomeusuario, email, senha_hash))
       self.__conexao.commit()
       self.__desconectar()
     except Exception as e:
-        raise ("Erro ao inserir novo usuário: %s"% e)
+        raise ("Erro ao inserir novo usuário: %s" % e)
         return False
     
   def gravar_chave_publica_privada(self, emissor, receptor, chavePub, chavePriv):

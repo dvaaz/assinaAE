@@ -1,5 +1,9 @@
-import banco_de_dados.dataSQL as sql
+
+from dataSQL import BancoDeDados as sql
 from cripto import Cripto as cripto
+
+
+
 
 def main():
     # TO DO: Implementar a lógica principal do programa
@@ -13,3 +17,19 @@ def main():
     # O usuario pode ver sua propria chave privada e publica
     # armazenar as mensagens criptografadas no banco de dados para rodar testes com as chaves privadas de outros usuarios
     #criar três usuários para testes
+    pass
+
+    
+
+
+banco = sql()
+cripto = cripto()
+
+banco.criar_sqlite()  # Cria o banco de dados e as tabelas necessárias
+
+
+username = input("Digite o nome de usuário: ")
+email = input("Digite o email: ")
+senha = input("Digite a senha: ")
+hash_senha = cripto.hash_senha(senha)
+banco.inserir_usuario(username, email, hash_senha)
