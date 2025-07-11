@@ -33,10 +33,8 @@ class Cripto:
         )
 
         # Armazenar as chaves no banco de dados
-        self.sql.inserir_chave_privada(emissor, receptor, private_pem.decode('utf-8')) # Converte bytes para string
-        self.sql.inserir_chave_publica(emissor, receptor, public_pem.decode('utf-8'))
-
-        return private_pem, public_pem
+        
+        return private_pem.decode('utf-8'), public_pem.decode('utf-8')
     
     # criptografa uma mensagem usando a chave privada buscada no banco de dados
     def criptografar_mensagem(self, mensagem, chave_privada):
